@@ -1,62 +1,23 @@
-# Programación Orientada a Objetos (POO) en TypeScript
+# Programación Orientada a Objetos con TypeScript
 
-## 1. Introducción
+# I. Introducción
+## 1. Objetivo
+Este material introduce la implementación de **clases y objetos en TypeScript**.
 
-La **Programación Orientada a Objetos (POO)** organiza un programa mediante **objetos** que combinan:
+Los conceptos de Programación Orientada a Objetos ya conocidos se mantienen:
 
-- **Estado**: datos del objeto, representados mediante propiedades.
-- **Comportamiento**: acciones del objeto, representadas mediante métodos.
+- **Clase:** define la estructura general.
+- **Objeto o instancia:** representa una entidad concreta creada a partir de una clase.
+- **Atributos:** representan el estado del objeto.
+- **Métodos:** representan su comportamiento.
 
-```text
-Objeto
-├── Estado → propiedades
-└── Comportamiento → métodos
-```
-
-TypeScript agrega a JavaScript un sistema de tipos que permite describir con mayor precisión las propiedades, parámetros, retornos y contratos de los objetos antes de ejecutar el programa.
+La principal diferencia está en la **sintaxis de TypeScript** y en el uso explícito de tipos.
 
 ---
 
-## 2. Clase, objeto e instancia
+## 2. Primera clase en TypeScript
 
-Una **clase** es una definición o plantilla que describe cómo serán los objetos.
-
-```typescript
-class Persona {
-}
-```
-
-Un **objeto** es una entidad concreta creada a partir de una clase.
-
-```typescript
-const ana = new Persona();
-```
-
-Una **instancia** es un objeto concreto creado a partir de una clase.
-
-```typescript
-const ana = new Persona();
-const pedro = new Persona();
-```
-
-Ambos objetos son instancias de `Persona`.
-
-```text
-             Persona
-                │
-        ┌───────┴───────┐
-        ▼               ▼
-       ana             pedro
-   instancia         instancia
-```
-
-> **Clase = definición general. Instancia = objeto concreto creado a partir de esa clase.**
-
----
-
-## 3. Propiedades
-
-Las **propiedades** representan el estado de un objeto.
+Una clase se declara utilizando la palabra reservada `class`.
 
 ```typescript
 class Persona {
@@ -65,18 +26,19 @@ class Persona {
 }
 ```
 
-Aquí:
+En este ejemplo:
 
-```text
-nombre → string
-edad   → number
-```
+- `Persona` es la **clase**.
+- `nombre` es un atributo de tipo `string`.
+- `edad` es un atributo de tipo `number`.
+
+TypeScript permite indicar explícitamente el tipo de los atributos.
 
 ---
 
-## 4. El constructor
+## 3. El constructor
 
-El `constructor` se ejecuta cuando se crea una instancia con `new`.
+En TypeScript se utiliza el método especial `constructor` para inicializar los atributos de un objeto.
 
 ```typescript
 class Persona {
@@ -90,123 +52,194 @@ class Persona {
 }
 ```
 
-Crear una instancia:
+El constructor recibe los valores necesarios cuando se crea una nueva instancia.
+
+### Partes del constructor
+
+```typescript
+constructor(nombre: string, edad: number)
+```
+
+Los parámetros son:
+
+- `nombre`, de tipo `string`.
+- `edad`, de tipo `number`.
+
+Luego:
+
+```typescript
+this.nombre = nombre;
+this.edad = edad;
+```
+
+los valores recibidos se almacenan en los atributos del objeto.
+
+---
+
+## 4. ¿Qué significa `this`?
+
+`this` hace referencia a la **instancia actual** que está ejecutando el código.
+
+Por ejemplo:
+
+```typescript
+this.nombre = nombre;
+```
+
+hay dos elementos llamados `nombre`, pero representan cosas diferentes:
+
+- `nombre` corresponde al **parámetro** recibido por el constructor.
+- `this.nombre` corresponde al **atributo del objeto actual**.
+
+Podemos interpretarlo como:
+
+```text
+atributo del objeto = valor recibido
+```
+
+---
+
+## 5. Comparación rápida con Python
+
+La estructura conceptual es la misma, pero cambia la sintaxis.
+
+### Python
+
+```python
+class Persona:
+
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+```
+
+### TypeScript
+
+```typescript
+class Persona {
+    nombre: string;
+    edad: number;
+
+    constructor(nombre: string, edad: number) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+}
+```
+
+Equivalencias principales:
+
+| Python | TypeScript |
+|---|---|
+| `class Persona:` | `class Persona { }` |
+| `__init__` | `constructor` |
+| `self` | `this` |
+| `self.nombre` | `this.nombre` |
+| `Persona("Ana", 20)` | `new Persona("Ana", 20)` |
+| `print()` | `console.log()` |
+
+---
+
+## 6. Crear objetos
+
+En TypeScript, para crear una instancia se utiliza la palabra reservada `new`.
+
+```typescript
+const ana = new Persona("Ana", 20);
+const pedro = new Persona("Pedro", 22);
+```
+
+Aquí:
+
+- `Persona` es la clase.
+- `ana` es una instancia de `Persona`.
+- `pedro` es otra instancia de `Persona`.
+
+Cada instancia mantiene su propio estado.
+
+```typescript
+console.log(ana.nombre);
+console.log(pedro.nombre);
+```
+
+Salida:
+
+```text
+Ana
+Pedro
+```
+
+---
+
+## 7. Agregar métodos
+
+Los métodos representan el **comportamiento** de los objetos.
+
+```typescript
+class Persona {
+    nombre: string;
+    edad: number;
+
+    constructor(nombre: string, edad: number) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    saludar(): void {
+        console.log("Hola, soy " + this.nombre);
+    }
+}
+```
+
+El método:
+
+```typescript
+saludar(): void
+```
+
+no retorna un valor, por eso se indica `void`.
+
+---
+
+## 8. Ejecutar un método
+
+Primero se crea el objeto:
 
 ```typescript
 const ana = new Persona("Ana", 20);
 ```
 
-Flujo conceptual:
-
-```text
-new Persona("Ana", 20)
-        ↓
-constructor(...)
-        ↓
-this.nombre = "Ana"
-this.edad = 20
-        ↓
-objeto inicializado
-```
-
----
-
-## 5. ¿Qué significa `this`?
-
-`this` representa la **instancia actual**.
+Luego se puede ejecutar uno de sus métodos:
 
 ```typescript
-class Persona {
-    nombre: string;
-
-    constructor(nombre: string) {
-        this.nombre = nombre;
-    }
-
-    saludar(): void {
-        console.log(`Hola, soy ${this.nombre}`);
-    }
-}
-```
-
-```typescript
-const ana = new Persona("Ana");
-const pedro = new Persona("Pedro");
-
 ana.saludar();
-pedro.saludar();
 ```
 
-Conceptualmente:
+Salida:
 
 ```text
-ana.saludar()   → this referencia a ana
-pedro.saludar() → this referencia a pedro
+Hola, soy Ana
 ```
+
+Cuando se ejecuta:
+
+```typescript
+ana.saludar();
+```
+
+dentro del método:
+
+```typescript
+this
+```
+
+hace referencia al objeto `ana`.
 
 ---
 
-## 6. Métodos
-
-Un **método** es una función definida dentro de una clase.
+## 9. Varias instancias de una misma clase
 
 ```typescript
-class Calculadora {
-    sumar(a: number, b: number): number {
-        return a + b;
-    }
-}
-```
-
-Uso:
-
-```typescript
-const calculadora = new Calculadora();
-const resultado = calculadora.sumar(5, 3);
-
-console.log(resultado);
-```
-
-TypeScript permite indicar:
-
-```text
-a: number
-b: number
-       ↓
-tipos de parámetros
-
-:number
-       ↓
-tipo de retorno
-```
-
-Si un método no retorna un valor útil:
-
-```typescript
-saludar(): void {
-    console.log("Hola");
-}
-```
-
----
-
-## 7. Ejemplo completo
-
-```typescript
-class Persona {
-    nombre: string;
-    edad: number;
-
-    constructor(nombre: string, edad: number) {
-        this.nombre = nombre;
-        this.edad = edad;
-    }
-
-    saludar(): void {
-        console.log(`Hola, soy ${this.nombre}`);
-    }
-}
-
 const ana = new Persona("Ana", 20);
 const pedro = new Persona("Pedro", 22);
 
@@ -214,121 +247,33 @@ ana.saludar();
 pedro.saludar();
 ```
 
-Identificación:
+Salida:
 
 ```text
-Clase       → Persona
-Propiedades → nombre, edad
-Constructor → constructor()
-Método      → saludar()
-Instancias  → ana, pedro
-this        → instancia actual
+Hola, soy Ana
+Hola, soy Pedro
+```
+
+Aunque ambos objetos fueron creados a partir de la misma clase, poseen valores diferentes.
+
+Podemos representarlo de la siguiente manera:
+
+```text
+                 Persona
+                    |
+          ---------------------
+          |                   |
+         ana                pedro
+          |                   |
+   nombre = "Ana"      nombre = "Pedro"
+   edad = 20           edad = 22
 ```
 
 ---
 
-## 8. Modificadores de acceso
+## 10. Estado y comportamiento
 
-TypeScript dispone de:
-
-- `public`
-- `private`
-- `protected`
-
-### `public`
-
-Es el acceso por defecto.
-
-```typescript
-class Persona {
-    public nombre: string;
-
-    constructor(nombre: string) {
-        this.nombre = nombre;
-    }
-}
-```
-
-```typescript
-const ana = new Persona("Ana");
-console.log(ana.nombre);
-```
-
-También puede omitirse `public`.
-
-### `private`
-
-Solo puede utilizarse directamente dentro de la clase.
-
-```typescript
-class Cuenta {
-    private saldo: number;
-
-    constructor(saldoInicial: number) {
-        this.saldo = saldoInicial;
-    }
-
-    obtenerSaldo(): number {
-        return this.saldo;
-    }
-}
-```
-
-Esto no es válido:
-
-```typescript
-console.log(cuenta.saldo);
-```
-
-### `protected`
-
-Puede utilizarse dentro de la clase y sus subclases, pero no desde código externo.
-
-```typescript
-class Persona {
-    protected nombre: string;
-
-    constructor(nombre: string) {
-        this.nombre = nombre;
-    }
-}
-```
-
-| Modificador | Misma clase | Subclase | Desde fuera |
-|---|---:|---:|---:|
-| `public` | Sí | Sí | Sí |
-| `protected` | Sí | Sí | No |
-| `private` | Sí | No | No |
-
----
-
-## 9. `readonly`
-
-`readonly` indica que una propiedad no debe reasignarse después de inicializarse.
-
-```typescript
-class Estudiante {
-    readonly id: number;
-    nombre: string;
-
-    constructor(id: number, nombre: string) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-}
-```
-
-Esto produce un error de TypeScript:
-
-```typescript
-estudiante.id = 20;
-```
-
----
-
-## 10. Sintaxis abreviada del constructor
-
-Versión explícita:
+Considere nuevamente:
 
 ```typescript
 class Persona {
@@ -339,44 +284,136 @@ class Persona {
         this.nombre = nombre;
         this.edad = edad;
     }
+
+    saludar(): void {
+        console.log("Hola, soy " + this.nombre);
+    }
 }
 ```
 
-Versión abreviada:
+Podemos identificar:
+
+### Estado
+
+Está representado por los atributos:
 
 ```typescript
-class Persona {
-    constructor(
-        public nombre: string,
-        public edad: number
-    ) {}
-}
+nombre: string;
+edad: number;
 ```
 
-Para aprender POO conviene comprender primero la versión explícita.
+### Comportamiento
+
+Está representado por los métodos:
+
+```typescript
+saludar(): void
+```
+
+Por lo tanto:
+
+```text
+Objeto = Estado + Comportamiento
+```
 
 ---
 
-## 11. Encapsulamiento
+## 11. Métodos con parámetros
 
-El **encapsulamiento** consiste en proteger el estado interno del objeto y controlar cómo se modifica.
+Los métodos también pueden recibir información.
+
+```typescript
+class Persona {
+    nombre: string;
+
+    constructor(nombre: string) {
+        this.nombre = nombre;
+    }
+
+    saludarA(otraPersona: string): void {
+        console.log(
+            "Hola " + otraPersona + ", soy " + this.nombre
+        );
+    }
+}
+```
+
+Uso:
+
+```typescript
+const ana = new Persona("Ana");
+
+ana.saludarA("Pedro");
+```
+
+Salida:
+
+```text
+Hola Pedro, soy Ana
+```
+
+---
+
+## 12. Métodos que retornan valores
+
+Un método puede retornar un resultado.
+
+```typescript
+class Rectangulo {
+    ancho: number;
+    alto: number;
+
+    constructor(ancho: number, alto: number) {
+        this.ancho = ancho;
+        this.alto = alto;
+    }
+
+    calcularArea(): number {
+        return this.ancho * this.alto;
+    }
+}
+```
+
+Uso:
+
+```typescript
+const figura = new Rectangulo(5, 3);
+
+const area: number = figura.calcularArea();
+
+console.log(area);
+```
+
+Salida:
+
+```text
+15
+```
+
+En:
+
+```typescript
+calcularArea(): number
+```
+
+`number` indica que el método retorna un número.
+
+---
+
+## 13. Modificar el estado de un objeto
+
+Los métodos también pueden modificar atributos.
 
 ```typescript
 class Cuenta {
-    private saldo: number;
+    saldo: number;
 
     constructor(saldoInicial: number) {
         this.saldo = saldoInicial;
     }
 
     depositar(monto: number): void {
-        if (monto > 0) {
-            this.saldo += monto;
-        }
-    }
-
-    obtenerSaldo(): number {
-        return this.saldo;
+        this.saldo = this.saldo + monto;
     }
 }
 ```
@@ -387,765 +424,798 @@ Uso:
 const cuenta = new Cuenta(1000);
 
 cuenta.depositar(500);
-console.log(cuenta.obtenerSaldo());
-```
 
----
-
-## 12. Getters y setters
-
-```typescript
-class Persona {
-    private _edad: number;
-
-    constructor(edad: number) {
-        this._edad = edad;
-    }
-
-    get edad(): number {
-        return this._edad;
-    }
-
-    set edad(valor: number) {
-        if (valor >= 0) {
-            this._edad = valor;
-        }
-    }
-}
-```
-
-Uso:
-
-```typescript
-const ana = new Persona(20);
-
-console.log(ana.edad);
-ana.edad = 21;
-```
-
----
-
-## 13. Restricciones de dominio
-
-Un dato puede tener el tipo correcto y aun así ser inválido.
-
-```typescript
-let nota: number = 20;
-```
-
-El tipo es correcto (`number`), pero puede violar la regla del dominio.
-
-```typescript
-class Estudiante {
-    private nota: number;
-
-    constructor(
-        public nombre: string,
-        nota: number
-    ) {
-        if (nota < 1.0 || nota > 7.0) {
-            throw new Error(
-                "La nota debe estar entre 1.0 y 7.0"
-            );
-        }
-
-        this.nota = nota;
-    }
-}
-```
-
-```text
-Tipo correcto
-      ≠
-Valor válido en el dominio
-```
-
----
-
-## 14. Propiedades opcionales y valores ausentes
-
-Una propiedad puede ser opcional:
-
-```typescript
-class Persona {
-    nombre: string;
-    telefono?: string;
-
-    constructor(nombre: string) {
-        this.nombre = nombre;
-    }
-}
-```
-
-También puede expresarse explícitamente la ausencia:
-
-```typescript
-class Estudiante {
-    nota: number | null;
-
-    constructor() {
-        this.nota = null;
-    }
-}
-```
-
-Aquí:
-
-```text
-nota puede ser number o null
-```
-
----
-
-## 15. Propiedades y métodos `static`
-
-Una propiedad `static` pertenece a la clase.
-
-```typescript
-class Persona {
-    static cantidad: number = 0;
-
-    constructor() {
-        Persona.cantidad++;
-    }
-}
-```
-
-```typescript
-new Persona();
-new Persona();
-
-console.log(Persona.cantidad);
-```
-
-También existen métodos estáticos:
-
-```typescript
-class Calculadora {
-    static sumar(a: number, b: number): number {
-        return a + b;
-    }
-}
-```
-
-Uso:
-
-```typescript
-const resultado = Calculadora.sumar(5, 3);
-```
-
-No se necesita crear una instancia.
-
----
-
-## 16. Herencia
-
-La **herencia** permite crear una clase basada en otra.
-
-```typescript
-class Persona {
-    constructor(public nombre: string) {}
-
-    saludar(): void {
-        console.log(`Hola, soy ${this.nombre}`);
-    }
-}
-```
-
-```typescript
-class Estudiante extends Persona {
-    estudiar(): void {
-        console.log("Estoy estudiando");
-    }
-}
-```
-
-Uso:
-
-```typescript
-const ana = new Estudiante("Ana");
-
-ana.saludar();
-ana.estudiar();
-```
-
-Relación conceptual:
-
-```text
-Estudiante ES UNA Persona
-```
-
----
-
-## 17. `super()`
-
-Una subclase puede llamar al constructor de la clase padre mediante `super()`.
-
-```typescript
-class Persona {
-    constructor(public nombre: string) {}
-}
-
-class Estudiante extends Persona {
-    constructor(
-        nombre: string,
-        public carrera: string
-    ) {
-        super(nombre);
-    }
-}
-```
-
----
-
-## 18. Sobrescritura de métodos
-
-```typescript
-class Persona {
-    presentarse(): void {
-        console.log("Soy una persona");
-    }
-}
-
-class Estudiante extends Persona {
-    override presentarse(): void {
-        console.log("Soy estudiante");
-    }
-}
-```
-
-`override` indica que estamos redefiniendo un método heredado.
-
----
-
-## 19. Polimorfismo
-
-```typescript
-class Animal {
-    hablar(): void {
-        console.log("Sonido");
-    }
-}
-
-class Perro extends Animal {
-    override hablar(): void {
-        console.log("Guau");
-    }
-}
-
-class Gato extends Animal {
-    override hablar(): void {
-        console.log("Miau");
-    }
-}
-```
-
-```typescript
-const animales: Animal[] = [
-    new Perro(),
-    new Gato()
-];
-
-for (const animal of animales) {
-    animal.hablar();
-}
+console.log(cuenta.saldo);
 ```
 
 Salida:
 
 ```text
-Guau
-Miau
+1500
 ```
 
-Diferentes objetos responden al mismo método de manera distinta.
+El método `depositar()` modifica el estado del objeto.
 
 ---
 
-## 20. Clases abstractas
-
-Una clase abstracta define una base que no está destinada a instanciarse directamente.
-
-```typescript
-abstract class Figura {
-    abstract area(): number;
-}
-```
-
-```typescript
-class Rectangulo extends Figura {
-    constructor(
-        private ancho: number,
-        private alto: number
-    ) {
-        super();
-    }
-
-    area(): number {
-        return this.ancho * this.alto;
-    }
-}
-```
-
-No puede hacerse:
-
-```typescript
-const figura = new Figura();
-```
-
----
-
-## 21. Interfaces
-
-Una `interface` describe un contrato estructural.
-
-```typescript
-interface Hablante {
-    hablar(): void;
-}
-```
-
-Una clase puede cumplir ese contrato:
-
-```typescript
-class Persona implements Hablante {
-    hablar(): void {
-        console.log("Hola");
-    }
-}
-```
-
-La interfaz indica **qué operaciones deben existir**; la clase determina **cómo se implementan**.
-
----
-
-## 22. `extends` vs. `implements`
-
-Herencia:
-
-```typescript
-class Estudiante extends Persona
-```
-
-Significa:
-
-```text
-Estudiante ES UNA Persona
-```
-
-Implementación de interfaz:
-
-```typescript
-class Robot implements Hablante
-```
-
-Significa:
-
-```text
-Robot CUMPLE el contrato Hablante
-```
-
----
-
-## 23. Tipado estructural
-
-TypeScript usa principalmente **tipado estructural**.
-
-```typescript
-interface Persona {
-    nombre: string;
-    edad: number;
-}
-```
-
-```typescript
-const estudiante = {
-    nombre: "Ana",
-    edad: 20,
-    carrera: "Informática"
-};
-```
-
-Esto es válido:
-
-```typescript
-const persona: Persona = estudiante;
-```
-
-porque `estudiante` posee al menos:
-
-```text
-nombre
-edad
-```
-
-La compatibilidad depende de la estructura, no necesariamente del nombre explícito del tipo.
-
----
-
-## 24. Composición
-
-La **composición** ocurre cuando un objeto contiene otros objetos.
-
-```typescript
-class Motor {
-    encender(): void {
-        console.log("Motor encendido");
-    }
-}
-
-class Auto {
-    private motor: Motor;
-
-    constructor() {
-        this.motor = new Motor();
-    }
-
-    arrancar(): void {
-        this.motor.encender();
-    }
-}
-```
-
-Uso:
-
-```typescript
-const auto = new Auto();
-auto.arrancar();
-```
-
-Relación:
-
-```text
-Auto TIENE UN Motor
-```
-
-Comparación:
-
-```text
-Herencia    → "es un"
-Composición → "tiene un"
-```
-
----
-
-## 25. Clases genéricas
-
-```typescript
-class Caja<T> {
-    constructor(private valor: T) {}
-
-    obtener(): T {
-        return this.valor;
-    }
-}
-```
-
-Uso:
-
-```typescript
-const cajaNumero = new Caja<number>(10);
-const cajaTexto = new Caja<string>("Hola");
-```
-
----
-
-## 26. Tipo Abstracto de Datos: Pila
-
-Podemos definir el contrato:
-
-```typescript
-interface Pila<T> {
-    agregar(elemento: T): void;
-    sacar(): T | undefined;
-    estaVacia(): boolean;
-}
-```
-
-Implementación:
-
-```typescript
-class PilaArray<T> implements Pila<T> {
-    private datos: T[] = [];
-
-    agregar(elemento: T): void {
-        this.datos.push(elemento);
-    }
-
-    sacar(): T | undefined {
-        return this.datos.pop();
-    }
-
-    estaVacia(): boolean {
-        return this.datos.length === 0;
-    }
-}
-```
-
-Uso:
-
-```typescript
-const pila = new PilaArray<number>();
-
-pila.agregar(10);
-pila.agregar(20);
-
-console.log(pila.sacar());
-```
-
-La interfaz describe **qué hace** la pila; la clase define **cómo lo hace**.
-
----
-
-## 27. Ejemplo integrador
+## 14. Ejemplo completo: clase `Estudiante`
 
 ```typescript
 class Estudiante {
-    static institucion: string = "Universidad";
+    nombre: string;
+    carrera: string;
+    edad: number;
 
     constructor(
-        public nombre: string,
-        public edad: number,
-        private nota: number
+        nombre: string,
+        carrera: string,
+        edad: number
     ) {
-        this.validarNota(nota);
+        this.nombre = nombre;
+        this.carrera = carrera;
+        this.edad = edad;
     }
 
-    private validarNota(nota: number): void {
-        if (nota < 1.0 || nota > 7.0) {
-            throw new Error("Nota inválida");
-        }
-    }
-
-    estaAprobado(): boolean {
-        return this.nota >= 4.0;
-    }
-
-    mostrarEstado(): void {
-        const estado = this.estaAprobado()
-            ? "Aprobado"
-            : "Reprobado";
-
+    presentarse(): void {
         console.log(
-            `${this.nombre} - ${this.nota} - ${estado}`
+            "Soy " + this.nombre +
+            ", estudio " + this.carrera
         );
     }
+
+    mostrarEdad(): void {
+        console.log("Tengo " + this.edad + " años");
+    }
 }
-
-const ana = new Estudiante("Ana", 20, 5.8);
-const pedro = new Estudiante("Pedro", 21, 3.5);
-
-ana.mostrarEstado();
-pedro.mostrarEstado();
 ```
 
-Identificación:
+Crear objetos:
 
-```text
-Clase                 → Estudiante
-Propiedad estática    → institucion
-Propiedades públicas  → nombre, edad
-Propiedad privada     → nota
-Constructor            → constructor()
-Método privado         → validarNota()
-Métodos públicos       → estaAprobado(), mostrarEstado()
-Instancias             → ana, pedro
-Restricción de dominio → 1.0 <= nota <= 7.0
+```typescript
+const estudiante1 =
+    new Estudiante("Ana", "Ingeniería Informática", 20);
+
+const estudiante2 =
+    new Estudiante("Pedro", "Ingeniería Civil", 22);
+```
+
+Ejecutar métodos:
+
+```typescript
+estudiante1.presentarse();
+estudiante1.mostrarEdad();
+
+estudiante2.presentarse();
 ```
 
 ---
 
-## 28. Comparación Python vs. TypeScript
+## 15. Forma abreviada del constructor en TypeScript
 
-| Concepto | Python | TypeScript |
-|---|---|---|
-| Clase | `class Persona:` | `class Persona {}` |
-| Instancia | `Persona()` | `new Persona()` |
-| Inicialización | `__init__()` | `constructor()` |
-| Instancia actual | `self` | `this` |
-| Método | `def metodo(self)` | `metodo(): void` |
-| Público | convención | `public` |
-| Privado | convención / name mangling | `private` |
-| Protegido | convención | `protected` |
-| Solo lectura | diseño/propiedades | `readonly` |
-| Herencia | `class B(A)` | `class B extends A` |
-| Clase padre | `super()` | `super()` |
-| Interface | `Protocol` / ABC según caso | `interface` |
-| Clase abstracta | `ABC` | `abstract class` |
-| Propiedad de clase | atributo de clase | `static` |
+TypeScript también permite declarar e inicializar atributos directamente en los parámetros del constructor.
+
+La siguiente clase:
+
+```typescript
+class Persona {
+    nombre: string;
+    edad: number;
+
+    constructor(nombre: string, edad: number) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+}
+```
+
+puede escribirse de forma más compacta:
+
+```typescript
+class Persona {
+    constructor(
+        public nombre: string,
+        public edad: number
+    ) {}
+}
+```
+
+Ambas formas permiten crear objetos como:
+
+```typescript
+const ana = new Persona("Ana", 20);
+```
+
+Para una primera aproximación a POO es recomendable comprender primero la **forma explícita**, porque permite observar claramente la relación entre parámetros, atributos y `this`.
 
 ---
 
-## 29. Resumen
+## 16. Errores frecuentes
 
-```text
-                    POO
-                     │
-                     ▼
-                   Clase
-                     │
-                     ▼
-                 Instancias
-                     │
-           ┌─────────┴─────────┐
-           ▼                   ▼
-         Estado            Comportamiento
-           │                   │
-      Propiedades            Métodos
-           │
-           └───────┬───────────┘
-                   ▼
-             Encapsulamiento
-                   │
-       ┌───────────┼───────────┐
-       ▼           ▼           ▼
-    Herencia   Polimorfismo  Composición
+### Olvidar `new`
+
+Incorrecto:
+
+```typescript
+const ana = Persona("Ana", 20);
 ```
 
-| Concepto | Significado |
-|---|---|
-| Clase | Definición o plantilla |
-| Objeto | Entidad concreta |
-| Instancia | Objeto creado a partir de una clase |
-| Propiedad | Dato asociado al objeto |
-| Método | Función asociada a una clase |
-| `constructor` | Inicializa el objeto |
-| `this` | Referencia a la instancia actual |
-| `public` | Accesible públicamente |
-| `private` | Accesible dentro de la clase |
-| `protected` | Accesible en clase y subclases |
-| `readonly` | Evita reasignaciones posteriores |
-| `static` | Pertenece a la clase |
-| `extends` | Define herencia |
-| `super()` | Accede al constructor de la clase padre |
-| `implements` | Cumple una interfaz |
-| `abstract` | Define una clase incompleta/base |
-| `interface` | Define un contrato estructural |
+Correcto:
+
+```typescript
+const ana = new Persona("Ana", 20);
+```
 
 ---
 
-## 30. Ejercicios
+### Confundir parámetro y atributo
 
-### Ejercicio 1: Libro
-
-Crear una clase `Libro` con:
-
-```text
-titulo: string
-autor: string
-anio: number
+```typescript
+constructor(nombre: string) {
+    this.nombre = nombre;
+}
 ```
 
-Agregar:
+- `nombre`: parámetro.
+- `this.nombre`: atributo del objeto.
 
-```text
-mostrarInformacion(): void
+---
+
+### Usar `self` en TypeScript
+
+Incorrecto:
+
+```typescript
+self.nombre = nombre;
 ```
 
-Crear dos instancias.
+Correcto:
 
-### Ejercicio 2: Cuenta bancaria
-
-Crear una clase `Cuenta` con:
-
-```text
-titular
-saldo
+```typescript
+this.nombre = nombre;
 ```
 
-Hacer `saldo` privado.
+`self` se utiliza habitualmente en Python. En TypeScript se utiliza `this`.
 
-Agregar:
+---
 
-```text
-depositar()
-retirar()
-obtenerSaldo()
+### No declarar el tipo
+
+TypeScript permite trabajar con tipos explícitos:
+
+```typescript
+nombre: string;
+edad: number;
 ```
 
-Restricciones:
+Esto ayuda a detectar errores durante el desarrollo.
 
-- no permitir depósitos negativos;
-- no permitir retiros superiores al saldo.
+---
 
-### Ejercicio 3: Estudiante
+## 17. Ejercicio
 
-Crear una clase `Estudiante` con:
+Diseñe una clase `Libro` con:
+
+- atributo `titulo` de tipo `string`;
+- atributo `autor` de tipo `string`;
+- atributo `paginas` de tipo `number`;
+- constructor para inicializar los tres atributos;
+- método `mostrarInfo()`.
+
+El método debe mostrar un mensaje similar a:
 
 ```text
-nombre
-notas
+El libro Clean Code fue escrito por Robert C. Martin
 ```
 
-Métodos:
+Luego cree dos instancias diferentes de `Libro`.
 
-```text
-agregarNota()
-promedio()
-estaAprobado()
+### Estructura inicial
+
+```typescript
+class Libro {
+
+    // atributos
+
+    constructor(/* parámetros */) {
+
+    }
+
+    mostrarInfo(): void {
+
+    }
+}
 ```
 
-Las notas deben estar entre `1.0` y `7.0`.
+---
 
-### Ejercicio 4: Herencia
+## 18. Resumen
 
-Crear `Persona` con:
+Una clase en TypeScript puede visualizarse como:
+
+```typescript
+class NombreClase {
+
+    // Estado
+    atributo: tipo;
+
+    // Inicialización
+    constructor(valor: tipo) {
+        this.atributo = valor;
+    }
+
+    // Comportamiento
+    metodo(): void {
+        // instrucciones
+    }
+}
+```
+
+Y una instancia se crea utilizando:
+
+```typescript
+const objeto = new NombreClase(valor);
+```
+
+Conceptualmente:
 
 ```text
-nombre
-edad
+Clase
+  ↓
+new
+  ↓
+Instancia
+  ↓
+Estado       → atributos
+Comportamiento → métodos
+```
+
+Las ideas fundamentales de POO no cambian al pasar de Python a TypeScript. Lo que cambia principalmente es la sintaxis:
+
+```text
+Python          TypeScript
+--------------------------------
+__init__   →    constructor
+self       →    this
+print()    →    console.log()
+instancia  →    new Clase(...)
+```
+
+## 19. Ejercicios prácticos
+
+Los siguientes ejercicios están organizados de forma progresiva. La idea es practicar la declaración de clases, atributos, `constructor`, `this`, creación de objetos con `new`, métodos, parámetros, valores de retorno y modificación del estado de una instancia.
+
+---
+
+### Ejercicio 1. Identificar los elementos de una clase
+
+Observe el siguiente código:
+
+```typescript
+class Mascota {
+    nombre: string;
+    edad: number;
+
+    constructor(nombre: string, edad: number) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    mostrarInfo(): void {
+        console.log(this.nombre + " tiene " + this.edad + " años");
+    }
+}
+```
+
+Responda:
+
+1. ¿Cuál es el nombre de la clase?
+2. ¿Cuáles son sus atributos?
+3. ¿Cuál es el método?
+4. ¿Cuál es la función del `constructor`?
+5. ¿Qué representa `this.nombre`?
+6. ¿Qué tipo de dato tiene `edad`?
+
+---
+
+### Ejercicio 2. Crear objetos
+
+Utilice la clase `Mascota` del ejercicio anterior y cree dos objetos:
+
+```typescript
+const mascota1 = new Mascota("Luna", 3);
+const mascota2 = new Mascota("Toby", 5);
 ```
 
 Luego:
 
-```typescript
-class Estudiante extends Persona
-```
+1. Muestre el nombre de `mascota1`.
+2. Muestre la edad de `mascota2`.
+3. Ejecute `mostrarInfo()` para ambos objetos.
+4. Explique por qué `mascota1` y `mascota2` pueden tener valores diferentes si pertenecen a la misma clase.
 
-Agregar:
+---
 
-```text
-carrera
-```
+### Ejercicio 3. Completar una clase
 
-### Ejercicio 5: Interface
-
-Definir:
+Complete el siguiente código:
 
 ```typescript
-interface Vehiculo {
-    arrancar(): void;
-    detener(): void;
+class Libro {
+    titulo: string;
+    autor: string;
+
+    constructor(__________________, __________________) {
+        __________________________
+        __________________________
+    }
+
+    mostrarInfo(): void {
+        console.log(
+            "Título: " + __________________ +
+            " - Autor: " + __________________
+        );
+    }
 }
 ```
 
-Crear `Auto` y `Moto` que implementen la interfaz.
+Luego cree:
+
+```typescript
+const libro1 = new Libro("Clean Code", "Robert C. Martin");
+```
+
+y ejecute el método `mostrarInfo()`.
 
 ---
 
-## 31. Preguntas de comprensión
+### Ejercicio 4. Diseñar una clase `Producto`
 
-1. ¿Cuál es la diferencia entre clase, objeto e instancia?
-2. ¿Qué función cumple `new`?
-3. ¿Para qué sirve `constructor`?
-4. ¿Qué representa `this`?
-5. ¿Qué diferencia hay entre propiedad y método?
-6. ¿Qué diferencia existe entre `public`, `private` y `protected`?
-7. ¿Qué significa `readonly`?
-8. ¿Qué diferencia hay entre una propiedad de instancia y una `static`?
-9. ¿Qué significa `extends`?
-10. ¿Para qué se usa `super()`?
-11. ¿Qué es sobrescritura de métodos?
-12. ¿Qué es polimorfismo?
-13. ¿Qué es una clase abstracta?
-14. ¿Qué es una `interface`?
-15. ¿Qué significa tipado estructural?
-16. ¿Qué diferencia existe entre `extends` e `implements`?
-17. ¿Qué diferencia existe entre herencia y composición?
-18. ¿Cómo puede una clase proteger restricciones de dominio?
+Cree una clase llamada `Producto` con los atributos:
+
+```text
+nombre
+precio
+```
+
+Tipos:
+
+- `nombre`: `string`
+- `precio`: `number`
+
+Debe incluir un constructor y un método `mostrarProducto()`.
+
+Ejemplo de uso esperado:
+
+```typescript
+const producto1 = new Producto("Teclado", 25000);
+producto1.mostrarProducto();
+```
+
+Salida esperada:
+
+```text
+Producto: Teclado - Precio: 25000
+```
 
 ---
 
-# Idea final
+### Ejercicio 5. Agregar un nuevo atributo
 
-> En TypeScript, la Programación Orientada a Objetos permite organizar programas mediante clases y objetos con propiedades y métodos. El sistema de tipos agrega mecanismos como modificadores de acceso, interfaces, clases abstractas, `readonly` y genéricos que permiten describir y verificar con mayor precisión la estructura de los objetos durante el desarrollo
+Considere la siguiente clase:
+
+```typescript
+class Estudiante {
+    nombre: string;
+    carrera: string;
+
+    constructor(nombre: string, carrera: string) {
+        this.nombre = nombre;
+        this.carrera = carrera;
+    }
+
+    presentarse(): void {
+        console.log(
+            "Soy " + this.nombre +
+            " y estudio " + this.carrera
+        );
+    }
+}
+```
+
+Modifique la clase para incorporar:
+
+```typescript
+edad: number;
+```
+
+El constructor debe recibir también la edad. Luego cree:
+
+```typescript
+const estudiante1 =
+    new Estudiante("Ana", "Ingeniería Informática", 20);
+```
+
+Agregue además un método:
+
+```typescript
+mostrarEdad(): void
+```
+
+que muestre:
+
+```text
+Tengo 20 años
+```
+
+---
+
+### Ejercicio 6. Método con parámetro
+
+Cree una clase llamada `Robot` con un atributo:
+
+```typescript
+nombre: string;
+```
+
+y un método:
+
+```typescript
+saludarA(persona: string): void
+```
+
+Ejemplo:
+
+```typescript
+const robot1 = new Robot("NOVA");
+robot1.saludarA("Ana");
+```
+
+Salida esperada:
+
+```text
+Hola Ana, soy NOVA
+```
+
+Responda también:
+
+1. ¿Cuál es el atributo?
+2. ¿Cuál es el parámetro del método?
+3. ¿A qué objeto hace referencia `this` cuando se ejecuta `robot1.saludarA("Ana")`?
+
+---
+
+### Ejercicio 7. Método que retorna un valor
+
+Cree una clase `Rectangulo` con:
+
+```typescript
+ancho: number;
+alto: number;
+```
+
+Agregue el método:
+
+```typescript
+calcularArea(): number
+```
+
+El método debe retornar el área del rectángulo.
+
+Ejemplo:
+
+```typescript
+const r1 = new Rectangulo(5, 4);
+const area: number = r1.calcularArea();
+console.log(area);
+```
+
+Salida esperada:
+
+```text
+20
+```
+
+---
+
+### Ejercicio 8. Modificar el estado de un objeto
+
+Cree una clase llamada `Contador` con el atributo:
+
+```typescript
+valor: number;
+```
+
+El constructor debe inicializar `valor` con el valor recibido. Agregue:
+
+```typescript
+incrementar(): void
+```
+
+que aumente el valor en uno:
+
+```typescript
+this.valor = this.valor + 1;
+```
+
+Ejemplo:
+
+```typescript
+const contador = new Contador(0);
+
+contador.incrementar();
+contador.incrementar();
+
+console.log(contador.valor);
+```
+
+Salida esperada:
+
+```text
+2
+```
+
+Responda:
+
+1. ¿Qué atributo representa el estado del objeto?
+2. ¿Qué método modifica ese estado?
+3. ¿Cuántas veces se ejecutó `incrementar()`?
+
+---
+
+### Ejercicio 9. Clase `Cuenta`
+
+Diseñe una clase `Cuenta` con el atributo:
+
+```typescript
+saldo: number;
+```
+
+Debe incluir:
+
+```typescript
+depositar(monto: number): void
+```
+
+El método debe sumar el monto al saldo actual.
+
+Ejemplo:
+
+```typescript
+const cuenta1 = new Cuenta(1000);
+cuenta1.depositar(500);
+console.log(cuenta1.saldo);
+```
+
+Salida:
+
+```text
+1500
+```
+
+Luego agregue:
+
+```typescript
+retirar(monto: number): void
+```
+
+que reste el monto indicado al saldo.
+
+---
+
+### Ejercicio 10. Dos objetos con estados diferentes
+
+Considere:
+
+```typescript
+class Auto {
+    marca: string;
+    velocidad: number;
+
+    constructor(marca: string, velocidad: number) {
+        this.marca = marca;
+        this.velocidad = velocidad;
+    }
+
+    acelerar(): void {
+        this.velocidad = this.velocidad + 10;
+    }
+}
+```
+
+Cree:
+
+```typescript
+const auto1 = new Auto("Toyota", 0);
+const auto2 = new Auto("Ford", 30);
+```
+
+Ejecute:
+
+```typescript
+auto1.acelerar();
+auto1.acelerar();
+auto2.acelerar();
+```
+
+Antes de ejecutar el programa, responda:
+
+1. ¿Cuál será la velocidad final de `auto1`?
+2. ¿Cuál será la velocidad final de `auto2`?
+3. ¿Por qué modificar `auto1.velocidad` no modifica `auto2.velocidad`?
+
+Después ejecute el programa para comprobar sus respuestas.
+
+---
+
+### Ejercicio 11. Corregir errores
+
+El siguiente código contiene errores:
+
+```typescript
+class Pelicula {
+    titulo: string;
+    anio: number;
+
+    constructor(titulo: string, anio: number) {
+        titulo = titulo;
+        anio = anio;
+    }
+
+    mostrar(): void {
+        console.log(self.titulo);
+    }
+}
+
+const pelicula1 = Pelicula("Interstellar", 2014);
+```
+
+Corrija el código considerando:
+
+1. el uso de `this`;
+2. la inicialización de atributos;
+3. la creación de objetos con `new`.
+
+Luego ejecute:
+
+```typescript
+pelicula1.mostrar();
+```
+
+---
+
+### Ejercicio 12. Predicción de salida
+
+Observe:
+
+```typescript
+class Curso {
+    nombre: string;
+    estudiantes: number;
+
+    constructor(nombre: string, estudiantes: number) {
+        this.nombre = nombre;
+        this.estudiantes = estudiantes;
+    }
+
+    agregarEstudiante(): void {
+        this.estudiantes = this.estudiantes + 1;
+    }
+
+    mostrarCantidad(): void {
+        console.log(this.estudiantes);
+    }
+}
+
+const curso1 = new Curso("POO", 20);
+
+curso1.agregarEstudiante();
+curso1.agregarEstudiante();
+curso1.mostrarCantidad();
+```
+
+¿Qué valor mostrará el programa? Explique cómo cambia el estado del objeto después de cada llamada a `agregarEstudiante()`.
+
+---
+
+## 20. Desafíos de modelado
+
+En los siguientes ejercicios no se entrega la clase completa. Primero identifique la **clase**, sus **atributos**, sus **métodos** y los **tipos de datos**. Luego implemente la solución en TypeScript.
+
+### Desafío 1. Videojuego
+
+Se necesita representar un personaje de un videojuego. Cada personaje tiene nombre, puntos de vida y nivel. El personaje puede mostrar su información, recibir daño y aumentar de nivel.
+
+Diseñe la clase `Personaje`.
+
+### Desafío 2. Asignatura
+
+Se necesita representar una asignatura universitaria. Cada asignatura tiene nombre, código y cantidad de estudiantes. Debe permitir mostrar su información y agregar un estudiante.
+
+Diseñe la clase `Asignatura`.
+
+### Desafío 3. Sensor
+
+Se necesita representar un sensor de temperatura. Cada sensor tiene un identificador y una temperatura actual. Debe permitir mostrar y actualizar la temperatura.
+
+Ejemplo de uso:
+
+```typescript
+const sensor1 = new Sensor("S01", 20);
+sensor1.actualizarTemperatura(23);
+sensor1.mostrarTemperatura();
+```
+
+Salida esperada:
+
+```text
+Sensor S01: 23 grados
+```
+
+### Desafío 4. Biblioteca
+
+Diseñe una clase `Libro` con título, autor y número de páginas. Debe tener un método `mostrarInfo(): void`.
+
+Cree tres objetos diferentes y muestre la información de cada uno. Después responda:
+
+1. ¿Qué elementos son comunes a todos los objetos?
+2. ¿Qué elementos pueden cambiar entre una instancia y otra?
+3. ¿Qué define la clase y qué mantiene cada objeto?
+
+---
+
+## 21. Actividad final integradora
+
+Diseñe una clase `Estudiante` que permita representar estudiantes de una asignatura.
+
+Debe poseer:
+
+```typescript
+nombre: string;
+nota1: number;
+nota2: number;
+nota3: number;
+```
+
+Debe incluir:
+
+```typescript
+constructor(...)
+calcularPromedio(): number
+mostrarInfo(): void
+```
+
+Para calcular el promedio utilice operaciones aritméticas simples:
+
+```typescript
+const promedio =
+    (this.nota1 + this.nota2 + this.nota3) / 3;
+```
+
+No es necesario utilizar arreglos ni métodos como `reduce()`.
+
+Ejemplo:
+
+```typescript
+const estudiante =
+    new Estudiante("Ana", 6.0, 5.5, 6.5);
+
+estudiante.mostrarInfo();
+```
+
+Una posible salida es:
+
+```text
+Estudiante: Ana
+Promedio: 6
+```
+
+### Preguntas de reflexión
+
+1. ¿Qué parte del código representa la clase?
+2. ¿Qué elementos representan el estado del estudiante?
+3. ¿Qué métodos representan su comportamiento?
+4. ¿Para qué se utiliza `this`?
+5. ¿Para qué se utiliza `new`?
+6. ¿Qué diferencia existe entre `constructor` en TypeScript y `__init__` en Python?
+7. ¿Por qué dos objetos de `Estudiante` pueden tener notas diferentes?
+
