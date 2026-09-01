@@ -8,5 +8,5 @@
 3. Módulo 3
     - [POO en Python](Python/POO.md)
         - [Ejercicios](Python/ejercicios.md)
-    - [Poo en TS](TypeScript/POO.md)
+    - [POO en TS](TypeScript/POO.md)
 
