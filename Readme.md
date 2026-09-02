@@ -9,4 +9,5 @@
     - [POO en Python](Python/POO.md)
         - [Ejercicios](Python/ejercicios.md)
     - [POO en TS](TypeScript/POO.md)
+    - [Ejercicios de abstracción](abstraccionPOO.md)
 
