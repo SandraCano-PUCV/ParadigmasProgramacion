@@ -723,6 +723,7 @@ En Ciencia de Datos, normalmente se representa en forma de tabla:
 ## Ejercicio 18. Detección de valores faltantes
 
 Un analista desea representar el proceso de limpieza de un conjunto de datos.
+
 De cada proceso de limpieza se registra:
 
 nombre del dataset;
