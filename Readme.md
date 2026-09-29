@@ -10,4 +10,6 @@
         - [Ejercicios](Python/ejercicios.md)
     - [POO en TS](TypeScript/POO.md)
     - [Ejercicios de abstracción](abstraccionPOO.md)
+4. Módulo 4
+    - [Paradigma Funcional](ParadigmaFuncional.md)
 
