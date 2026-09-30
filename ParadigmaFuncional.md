@@ -2254,3 +2254,36 @@ co2
 | C301 | 22.4 | 43 | 600 |
 
 ---
+
+# Ejercicio 3: Temperatura de ciudades en un DataFrame
+
+## Enunciado
+
+A partir de `lst_ciudad`, que contiene las temperaturas de varias ciudades durante los primeros cuatro meses del año, diseñe un programa en Python que construya un objeto `DataFrame`.
+
+El `DataFrame` debe contener las siguientes columnas:
+
+```text
+Ciudad
+Enero
+Febrero
+Marzo
+Abril
+```
+
+Los datos son:
+
+| Ciudad | Enero | Febrero | Marzo | Abril |
+|---|---:|---:|---:|---:|
+| Londres | 3.4 | 6.3 | 10.5 | 6.8 |
+| Oslo | -3.8 | -5.0 | 5.1 | 4.2 |
+| Berlin | 7.5 | 4.1 | 12.3 | 13.0 |
+| Málaga | 14.7 | 12.3 | 19.5 | 18.4 |
+
+El nombre asociado al conjunto de datos será:
+
+```text
+Temperatura ciudades
+```
+
+---
