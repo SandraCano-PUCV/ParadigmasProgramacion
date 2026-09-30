@@ -2203,30 +2203,54 @@ Restricciones:
 
 ---
 
-# Cierre
+# Ejercicios
+1. **Analítica** de actividad en una plataforma educativa
+# Ejercicio 1 — Actividad de estudiantes en una plataforma
+Una plataforma educativa registra la actividad semanal de varios estudiantes.
 
-El paradigma funcional propone pensar los programas como una serie de transformaciones:
-
+Cada registro contiene:
 ```text
-entrada
-   ↓
-función
-   ↓
-nuevo valor
+nombre
+minutos_conectado
+actividades_entregadas
+porcentaje_avance
 ```
 
-Cuando trabajamos con colecciones:
+## Datos
+| Estudiante | Minutos conectado | Actividades entregadas | Avance |
+|---|---:|---:|---:|
+| Ana | 180 | 8 | 90 |
+| Pedro | 75 | 3 | 45 |
+| Camila | 220 | 9 | 95 |
+| Luis | 110 | 5 | 70 |
+| Sofía | 160 | 7 | 85 |
+---
+
+---
+
+# Ejercicio 2 — Lecturas de sensores ambientales
+
+## Contexto
+
+Un sistema registra mediciones ambientales en distintas salas.
+
+Cada registro contiene:
 
 ```text
-datos
-  ↓
-filter
-  ↓
-map
-  ↓
-reduce
-  ↓
-resultado
+sala
+temperatura
+humedad
+co2
 ```
 
-Para estudiantes de Ciencia de Datos esta forma de pensar resulta especialmente útil, porque muchas tareas de preparación y procesamiento pueden describirse como una secuencia de transformaciones sobre registros, sin necesidad de introducir todavía modelos estadísticos o Machine Learning.
+## Datos
+
+| Sala | Temperatura | Humedad | CO2 |
+|---|---:|---:|---:|
+| A101 | 21.5 | 45 | 550 |
+| A102 | 25.2 | 48 | 820 |
+| B201 | 23.8 | 51 | 760 |
+| B202 | 27.1 | 55 | 910 |
+| C301 | 22.4 | 43 | 600 |
+
+---

@@ -12,4 +12,5 @@
     - [Ejercicios de abstracción](abstraccionPOO.md)
 4. Módulo 4
     - [Paradigma Funcional](ParadigmaFuncional.md)
+        - [Ejercicios Python / TS](ejerciciosPOOFuncional.md)
 
