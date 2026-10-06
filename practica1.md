@@ -2,23 +2,45 @@
 
 ## Objetivo
 
-En este laboratorio trabajaremos con un dataset almacenado en un archivo:
-
-```text
-dataset.csv
-```
+En este laboratorio trabajaremos con un dataset almacenado en un archivo CSV.
 
 El objetivo será desarrollar progresivamente un programa que permita:
 
-1. Cargar un archivo CSV.
-2. Comprender su estructura.
-3. Revisar la calidad de los datos.
-4. Limpiar y transformar los datos.
-5. Crear nuevas variables.
-6. Representar los datos mediante clases y objetos.
-7. Aplicar programación funcional.
-8. Realizar análisis con Pandas.
-9. Exportar el resultado.
+1. Leer un archivo CSV.
+2. Comprender la estructura de los datos.
+3. Explorar el dataset.
+4. Revisar la calidad de los datos.
+5. Limpiar los datos.
+6. Transformar variables.
+7. Crear nuevas variables.
+8. Representar los registros mediante Programación Orientada a Objetos.
+9. Aplicar programación funcional.
+10. Analizar los datos mediante Pandas.
+11. Exportar los resultados a un nuevo archivo CSV.
+
+El flujo general será:
+
+```text
+dataset.csv
+     ↓
+Lectura
+     ↓
+Exploración
+     ↓
+Validación
+     ↓
+Limpieza
+     ↓
+Transformación
+     ↓
+POO
+     ↓
+Programación funcional
+     ↓
+Análisis con Pandas
+     ↓
+dataset_procesado.csv
+```
 
 ---
 
@@ -26,7 +48,9 @@ El objetivo será desarrollar progresivamente un programa que permita:
 
 ## Paso 1. Importar Pandas
 
-Cree un nuevo archivo Python o Notebook e importe Pandas:
+Cree un nuevo archivo Python o un Notebook.
+
+Importe la biblioteca Pandas:
 
 ```python
 import pandas as pd
@@ -38,39 +62,104 @@ Pandas se importa habitualmente utilizando el alias:
 pd
 ```
 
-Compruebe que la biblioteca se encuentre instalada:
-
-```python
-print(pd.__version__)
-```
-
----
-
-# Parte 2. Leer el archivo CSV
-
-## Paso 2. Cargar el dataset
-
-Para leer un archivo CSV utilizaremos:
+Esto permite escribir:
 
 ```python
 pd.read_csv()
 ```
 
-Escriba:
+en lugar de:
 
 ```python
-df = pd.read_csv("dataset.csv")
+pandas.read_csv()
 ```
 
-La función `read_csv()` lee los datos del archivo y crea un objeto de tipo:
+### Compruebe la versión instalada
 
-```text
-DataFrame
+```python
+print(pd.__version__)
 ```
+
+### Pregunta
+
+¿Qué biblioteca utilizaremos principalmente para manipular el dataset?
 
 ---
 
-## Paso 3. Comprobar el tipo de estructura creada
+# Parte 2. Leer el archivo CSV
+
+## Paso 2. Analizar el formato del archivo
+
+Antes de cargar un archivo CSV es importante conocer cómo están separados los datos.
+
+Nuestro archivo utiliza:
+
+```text
+;
+```
+
+como separador.
+
+Por ejemplo, una línea del archivo puede tener una estructura similar a:
+
+```text
+school;sex;age;address;studytime;absences;G1;G2;G3
+```
+
+Esto significa que cada variable está separada mediante un punto y coma.
+
+---
+
+## Paso 3. Leer el archivo
+
+Utilizaremos:
+
+```python
+pd.read_csv()
+```
+
+Como el archivo utiliza `;`, debemos indicar:
+
+```python
+sep=";"
+```
+
+Escriba:
+
+```python
+df = pd.read_csv(
+    "dataset.csv",
+    sep=";"
+)
+```
+
+También puede escribirse en una sola línea:
+
+```python
+df = pd.read_csv("dataset.csv", sep=";")
+```
+
+### ¿Qué significa `sep=";"`?
+
+El parámetro:
+
+```python
+sep=";"
+```
+
+indica a Pandas que las columnas están separadas mediante punto y coma.
+
+Si no indicamos este parámetro, Pandas normalmente intentará utilizar:
+
+```text
+,
+```
+
+como separador.
+
+---
+
+## Paso 4. Comprobar el tipo de objeto creado
 
 Ejecute:
 
@@ -84,15 +173,23 @@ Debería aparecer:
 <class 'pandas.core.frame.DataFrame'>
 ```
 
+Un `DataFrame` es una estructura tabular formada por:
+
+```text
+filas
+columnas
+índices
+```
+
 ### Pregunta
 
-¿Qué estructura de Pandas representa una tabla formada por filas y columnas?
+¿Qué estructura de Pandas se creó al leer el archivo CSV?
 
 ---
 
-# Parte 3. Visualizar el dataset
+# Parte 3. Comprobar que el CSV fue leído correctamente
 
-## Paso 4. Mostrar los primeros registros
+## Paso 5. Mostrar los primeros registros
 
 Ejecute:
 
@@ -110,37 +207,64 @@ print(df.head(10))
 
 ### Actividad
 
-Modifique el código para mostrar los primeros 15 registros.
+Muestre los primeros 15 registros.
+
+Complete:
 
 ```python
-print(df.head(____))
+print(df.head(_____))
 ```
 
 ---
 
-## Paso 5. Mostrar los últimos registros
+## Paso 6. Revisar las columnas
 
 Ejecute:
 
 ```python
-print(df.tail())
+print(df.columns)
 ```
 
-Ahora pruebe:
+Deberían aparecer varias columnas independientes.
+
+Por ejemplo:
+
+```text
+school
+sex
+age
+address
+studytime
+absences
+G1
+G2
+G3
+```
+
+### Importante
+
+Si aparece algo parecido a:
+
+```text
+school;sex;age;address;studytime;absences;G1;G2;G3
+```
+
+como una sola columna, significa que el archivo no fue leído con el separador correcto.
+
+Verifique que haya utilizado:
 
 ```python
-print(df.tail(10))
+df = pd.read_csv(
+    "dataset.csv",
+    sep=";"
+)
 ```
-
-### Pregunta
-
-¿Qué diferencia existe entre `head()` y `tail()`?
 
 ---
 
-# Parte 4. Conocer las dimensiones
+# Parte 4. Conocer las dimensiones del dataset
 
-## Paso 6. Obtener número de filas y columnas
+## Paso 7. Obtener filas y columnas
 
 Ejecute:
 
@@ -154,7 +278,7 @@ El resultado tendrá la forma:
 (filas, columnas)
 ```
 
-También podemos separar ambos valores:
+También puede escribir:
 
 ```python
 filas, columnas = df.shape
@@ -171,11 +295,17 @@ Número de registros: __________
 Número de variables: __________
 ```
 
+### Preguntas
+
+¿Qué representa una fila?
+
+¿Qué representa una columna?
+
 ---
 
-# Parte 5. Conocer las columnas
+# Parte 5. Investigar las variables
 
-## Paso 7. Mostrar los nombres de las columnas
+## Paso 8. Mostrar las columnas
 
 Ejecute:
 
@@ -192,25 +322,27 @@ for columna in df.columns:
 
 ### Actividad
 
-Seleccione cinco variables del dataset y escriba qué cree que representa cada una.
+Seleccione cinco variables del dataset.
 
 ```text
-Variable 1: __________
+Variable 1: __________________
 
-Variable 2: __________
+Variable 2: __________________
 
-Variable 3: __________
+Variable 3: __________________
 
-Variable 4: __________
+Variable 4: __________________
 
-Variable 5: __________
+Variable 5: __________________
 ```
+
+Intente describir qué representa cada una.
 
 ---
 
-# Parte 6. Investigar los tipos de datos
+# Parte 6. Analizar tipos de datos
 
-## Paso 8. Mostrar tipos
+## Paso 9. Consultar los tipos
 
 Ejecute:
 
@@ -227,13 +359,13 @@ object
 bool
 ```
 
-Por ejemplo:
+Generalmente:
 
 ```text
 int64
 ```
 
-representa normalmente números enteros.
+representa números enteros.
 
 ```text
 float64
@@ -245,11 +377,11 @@ representa números decimales.
 object
 ```
 
-normalmente representa texto o variables categóricas.
+representa normalmente texto o variables categóricas.
 
 ---
 
-# Paso 9. Utilizar `info()`
+## Paso 10. Utilizar `info()`
 
 Ejecute:
 
@@ -259,33 +391,22 @@ df.info()
 
 Observe:
 
-- cantidad de filas;
+- cantidad de registros;
 - cantidad de columnas;
-- nombres;
+- nombre de las columnas;
 - valores no nulos;
-- tipos de datos.
+- tipos de datos;
+- memoria utilizada.
 
 ### Pregunta
 
-¿Qué diferencia existe entre:
-
-```python
-df.dtypes
-```
-
-y:
-
-```python
-df.info()
-```
-
-?
+¿Qué información entrega `info()` que no aparece directamente en `head()`?
 
 ---
 
-# Parte 7. Exploración estadística inicial
+# Parte 7. Exploración inicial
 
-## Paso 10. Utilizar `describe()`
+## Paso 11. Obtener estadísticas descriptivas
 
 Ejecute:
 
@@ -293,7 +414,7 @@ Ejecute:
 print(df.describe())
 ```
 
-Observe:
+Observe valores como:
 
 ```text
 count
@@ -306,15 +427,22 @@ min
 max
 ```
 
-### Pregunta
+### ¿Qué significan?
 
-¿Qué tipo de variables aparecen principalmente en `describe()`?
+- `count`: cantidad de observaciones.
+- `mean`: media.
+- `std`: desviación estándar.
+- `min`: valor mínimo.
+- `25%`: primer cuartil.
+- `50%`: mediana.
+- `75%`: tercer cuartil.
+- `max`: valor máximo.
 
 ---
 
-# Paso 11. Analizar una columna numérica
+# Parte 8. Analizar una variable numérica
 
-Seleccione una variable numérica del dataset.
+## Paso 12. Seleccionar una columna
 
 Por ejemplo:
 
@@ -322,7 +450,7 @@ Por ejemplo:
 print(df["G3"])
 ```
 
-Calcule su promedio:
+Ahora obtenga el promedio:
 
 ```python
 print(df["G3"].mean())
@@ -330,7 +458,7 @@ print(df["G3"].mean())
 
 ---
 
-# Paso 12. Calcular estadísticas básicas
+## Paso 13. Calcular diferentes estadísticas
 
 Complete:
 
@@ -338,3 +466,5 @@ Complete:
 print("Media:", df["G3"].mean())
 
 print("Mediana:", df["G3"].________())
+
+print("Mínimo:", df["G3
