@@ -10,6 +10,8 @@
         - [Ejercicios](Python/ejercicios.md)
     - [POO en TS](TypeScript/POO.md)
     - [Ejercicios de abstracción](abstraccionPOO.md)
+    - [Práctica 1](Datasets/practica1.md)
+        - [Dataset](Datasets/dataset.xlsx)
 4. Módulo 4
     - [Paradigma Funcional](ParadigmaFuncional.md)
         - [Ejercicios Python / TS](ejerciciosPOOFuncional.md)
