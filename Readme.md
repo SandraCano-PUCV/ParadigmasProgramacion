@@ -14,5 +14,5 @@
 4. Módulo 4
     - [Paradigma Funcional](ParadigmaFuncional.md)
         - [Ejercicios Python / TS](ejerciciosPOOFuncional.md)
-    - [Práctica 1](Datasets/practica1.md)
+    - [Práctica 1](practica1.md)
          - [Dataset](Datasets/dataset.xlsx)
