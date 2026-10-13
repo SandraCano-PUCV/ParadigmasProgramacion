@@ -15,4 +15,6 @@
     - [Paradigma Funcional](ParadigmaFuncional.md)
         - [Ejercicios Python / TS](ejerciciosPOOFuncional.md)
     - [Práctica 1](practica1.md)
-         - [Dataset](Datasets/dataset.xlsx)
+         - [Dataset](Datasets/dataset.csv)
+5. Módulo 5:
+    - [Programación Lógica](pLogica.md)
