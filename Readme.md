@@ -18,3 +18,4 @@
          - [Dataset](Datasets/dataset.csv)
 5. Módulo 5:
     - [Programación Lógica](pLogica.md)
+        - [Prácticas](practicasPLogica.md)
